@@ -2,10 +2,11 @@
  * Created by chester on 04.01.17.
  */
 $(document).ready(function () {
-    console.log("ggrg");
+    var name=prompt("Введите имя ");
     var ws;
     var players = {};
     var myplayer={};
+    var bullets={};
     var map={};
     var keys=[];
     keys.fill(0,0,this.length);
@@ -37,8 +38,10 @@ $(document).ready(function () {
                 break;
             case 'players':
                 players
-                players=message['data'];
+                players=message['data'].players;
                 myplayer=players[message['my_id']];
+                bullets=message['data'].bullets;
+                //console.log("BULLETS: "+JSON.stringify(bullets));
                 break;
 
         }
@@ -88,6 +91,11 @@ $(document).ready(function () {
         keys[key]=0;
     });
 
+    $("#canvas").on("click",function (e) {
+      //  alert("МЫШ!!!! " +e.pageX+" "+$("#canvas").position().left+" "+$("#canvas").position().top);
+        ws.send(JSON.stringify({'type':'fire','data':{'dx':1,'dy':0}}));
+    });
+
 
     var ctx=document.getElementById("canvas").getContext("2d");
     function draw() {
@@ -122,9 +130,22 @@ $(document).ready(function () {
                 ctx.lineWidth=1;
                 ctx.rect(mypos.x+(p.x-myplayer.x),mypos.y+(p.y-myplayer.y),40,40);
                 ctx.stroke();
+
+                ctx.font="20px Georgia";
+                ctx.fillText(p.name,mypos.x+(p.x-myplayer.x)-10,mypos.y+(p.y-myplayer.y)-10);
             }
 
-            console.log("player "+myplayer.x+" "+myplayer.y);
+            for(var k in bullets){
+                for(var i in k){
+                    console.log("BULLETS "+ JSON.stringify(i));
+                    ctx.beginPath();
+                    ctx.lineWidth=2;
+                    ctx.rect(mypos.x+(i.x-myplayer.x),mypos.y+(i.y-myplayer.y),5,5);
+                    ctx.stroke();
+                }
+            }
+            //console.log("player "+myplayer.x+" "+myplayer.y);
+
         }
 
     }
@@ -136,9 +157,10 @@ $(document).ready(function () {
         if(keys[83]==1) dy=2;
         if(keys[65]==1) dx=-2;
         console.log('DXDY '+dx+' '+dy);
-        ws.send(JSON.stringify({'type':'move','data':{'dx':dx,'dy':dy}}));
+        ws.send(JSON.stringify({'type':'move','data':{'dx':dx,'dy':dy,'name':name}}));
         console.log(JSON.stringify(players))
         getPlayers();
+
     };
 
     connect();
