@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f1267776-0939-4ebe-abad-729753d513e3" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/main.js" afterPath="$PROJECT_DIR$/client/main.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/server.js" afterPath="$PROJECT_DIR$/server/server.js" />
     </list>
@@ -25,8 +24,8 @@
       <file leaf-file-name="server.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/server/server.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="396">
-              <caret line="22" column="11" lean-forward="false" selection-start-line="22" selection-start-column="11" selection-end-line="22" selection-end-column="11" />
+            <state relative-caret-position="573">
+              <caret line="143" column="31" lean-forward="false" selection-start-line="143" selection-start-column="31" selection-end-line="143" selection-end-column="31" />
               <folding />
             </state>
           </provider>
@@ -35,8 +34,8 @@
       <file leaf-file-name="main.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/client/main.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="465">
-              <caret line="107" column="61" lean-forward="false" selection-start-line="107" selection-start-column="61" selection-end-line="107" selection-end-column="61" />
+            <state relative-caret-position="-1746">
+              <caret line="16" column="42" lean-forward="false" selection-start-line="16" selection-start-column="42" selection-end-line="16" selection-end-column="42" />
               <folding>
                 <element signature="e#0#42#0" expanded="false" />
               </folding>
@@ -226,12 +225,12 @@
       <workItem from="1483731870181" duration="719000" />
       <workItem from="1483739577088" duration="698000" />
       <workItem from="1483797332747" duration="6511000" />
-      <workItem from="1483863890864" duration="4929000" />
+      <workItem from="1483863890864" duration="11674000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="33121000" />
+    <option name="totallyTimeSpent" value="39866000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="-1056" width="1855" height="1056" extended-state="6" />
@@ -381,8 +380,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/client/main.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="465">
-          <caret line="107" column="61" lean-forward="false" selection-start-line="107" selection-start-column="61" selection-end-line="107" selection-end-column="61" />
+        <state relative-caret-position="-1746">
+          <caret line="16" column="42" lean-forward="false" selection-start-line="16" selection-start-column="42" selection-end-line="16" selection-end-column="42" />
           <folding>
             <element signature="e#0#42#0" expanded="false" />
           </folding>
@@ -391,8 +390,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/server/server.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="396">
-          <caret line="22" column="11" lean-forward="false" selection-start-line="22" selection-start-column="11" selection-end-line="22" selection-end-column="11" />
+        <state relative-caret-position="573">
+          <caret line="143" column="31" lean-forward="false" selection-start-line="143" selection-start-column="31" selection-end-line="143" selection-end-column="31" />
           <folding />
         </state>
       </provider>

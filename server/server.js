@@ -4,8 +4,12 @@
 
 var express = require('express');
 var app = express();
-app.use(express.static("./client"));
+var path=require("path");
 
+app.use(express.static("/home/chester/programming/phpstormProjects/2d-deathmatch/client"));
+app.get('/',function (req, res) {
+   res.sendFile('/home/chester/programming/phpstormProjects/2d-deathmatch/client/index.html');
+});
 var WebSocket = new require('ws');
 
 var SocketServer = new WebSocket.Server({
@@ -25,6 +29,22 @@ function rand(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+
+/*var intersects = function(a, b) {
+    var s1 = ( a.x>=b.x && a.x<=b.x1 )||( a.x1>=b.x && a.x1<=b.x1 ),
+        s2 = ( a.y>=b.y && a.y<=b.y1 )||( a.y1>=b.y && a.y1<=b.y1 ),
+        s3 = ( b.x>=a.x && b.x<=a.x1 )||( b.x1>=a.x && b.x1<=a.x1 ),
+        s4 = ( b.y>=a.y && b.y<=a.y1 )||( b.y1>=a.y && b.y1<=a.y1 );
+
+    return ((s1 && s2) || (s3 && s4)) || ((s1 && s4) || (s3 && s2));
+};*/
+function intersectRect(r1, r2) {
+    return !(r2.left > r1.right ||
+    r2.right < r1.left ||
+    r2.top > r1.bottom ||
+    r2.bottom < r1.top);
+}
+
 function addBullet(id, dx, dy) {
     if (bullets[id] == null) {
         bullets[id] = [];
@@ -37,6 +57,11 @@ function addBullet(id, dx, dy) {
     newBullet.dy = dy/100*speed;
     bullets[id].push(newBullet);
     console.log("FIRE! " + bullets[id].length + " " + newBullet.x + " " + newBullet.y);
+}
+
+function removeBullet(i,bullet){
+    var index=bullets[bullet].indexOf(bullets[bullet][i]);
+    bullets[bullet].splice(index,1);
 }
 
 
@@ -89,18 +114,56 @@ SocketServer.on('connection', function (ws) {
 
 });
 
+
+
 function update() {
 
     for (var bullet in bullets) {
         var b=bullets[bullet];
         for (var i = 0; i < b.length; i++) {
+
             bullets[bullet][i].x += bullets[bullet][i].dx;
             bullets[bullet][i].y += bullets[bullet][i].dy;
+
             if(bullets[bullet][i].x<0 || bullets[bullet][i].x>field.r||
                 bullets[bullet][i].y<0 || bullets[bullet][i].y>field.b){
-                var index=bullets[bullet].indexOf(bullets[bullet][i]);
-                bullets[bullet].splice(index,1);
+                removeBullet(i,bullet);
+                --i;
+                break;
+
             }
+            //console.log("KEY: "+bullet);
+        }
+    }
+
+    //intersect
+    for (var bullet in bullets) {
+        var a={};
+        var b={};
+        var b=bullets[bullet];
+        for (var i = b.length-1; i >=0; --i) {
+            for(var p in players){
+                //console.log("intersetc "+bullet+" "+p);
+                if(bullet!=p){
+
+                    a.left=players[p].x;
+                    a.right=players[p].x+40;
+                    a.top=players[p].y;
+                    a.bottom=players[p].y+40;
+
+                    b.left=bullets[bullet][i].x;
+                    b.right=bullets[bullet][i].x+5;
+                    b.top=bullets[bullet][i].y;
+                    b.bottom=bullets[bullet][i].y+5;
+                    if(intersectRect(a,b)){
+                     //removeBullet(i,bullet);
+                     bullets[bullet].splice(i,1);
+
+                     break;
+                     }
+                }
+            }
+            //console.log("KEY: "+bullet);
         }
     }
 
@@ -108,4 +171,4 @@ function update() {
 
 setInterval(update, 1000 / 60);
 
-app.listen(9090);
+app.listen('9090','192.168.1.3');

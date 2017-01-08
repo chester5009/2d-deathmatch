@@ -14,7 +14,7 @@ $(document).ready(function () {
     var dx=0;dy=0;
 
     function connect () {
-        ws=new WebSocket("ws://127.0.0.1:9595");
+        ws=new WebSocket("ws://192.168.1.3:9595");
         ws.onopen=onopen;
         ws.onmessage=onmessage;
         ws.error=null;
