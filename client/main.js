@@ -45,7 +45,7 @@ $(document).ready(function () {
                 break;
 
         }
-        console.log(message);
+        //console.log(message);
     }
     
     function onopen() {
@@ -92,8 +92,20 @@ $(document).ready(function () {
     });
 
     $("#canvas").on("click",function (e) {
-      //  alert("МЫШ!!!! " +e.pageX+" "+$("#canvas").position().left+" "+$("#canvas").position().top);
-        ws.send(JSON.stringify({'type':'fire','data':{'dx':1,'dy':0}}));
+        var width=$("#canvas").width();
+        var height=$("#canvas").height();
+        var mypos={
+            x:width/2-20,
+            y:height/2-20
+        };
+        //alert("МЫШ!!!! " +e.pageX+" "+$("#canvas").position().left+" "+$("#canvas").position().top);
+        var mouseX=e.pageX-$("#canvas").position().left;
+        var mouseY=e.pageY-$("#canvas").position().top;
+
+        var dx=mouseX-mypos.x;
+        var dy=mouseY-mypos.y;
+        console.log("DX DY "+mouseX+" "+mouseY);
+        ws.send(JSON.stringify({'type':'fire','data':{'dx':dx,'dy':dy}}));
     });
 
 
@@ -134,15 +146,29 @@ $(document).ready(function () {
                 ctx.font="20px Georgia";
                 ctx.fillText(p.name,mypos.x+(p.x-myplayer.x)-10,mypos.y+(p.y-myplayer.y)-10);
             }
+            //console.log("BULLETS "+ JSON.stringify(bullets));
 
             for(var k in bullets){
-                for(var i in k){
-                    console.log("BULLETS "+ JSON.stringify(i));
+                //console.log(bullets[k]);
+                var b=bullets[k];
+
+                for(var i=0;i<b.length;i++){
+                    ctx.beginPath();
+                    ctx.lineWidth=2;
+                    ctx.rect(mypos.x+(b[i].x-myplayer.x),mypos.y+(b[i].y-myplayer.y),5,5);
+                    ctx.stroke();
+                }
+
+
+
+
+                /*for(var i in k){
+                    console.log("BULS "+bullets[i][0].x);
                     ctx.beginPath();
                     ctx.lineWidth=2;
                     ctx.rect(mypos.x+(i.x-myplayer.x),mypos.y+(i.y-myplayer.y),5,5);
                     ctx.stroke();
-                }
+                }*/
             }
             //console.log("player "+myplayer.x+" "+myplayer.y);
 
@@ -156,9 +182,9 @@ $(document).ready(function () {
         if(keys[68]==1) dx=2;
         if(keys[83]==1) dy=2;
         if(keys[65]==1) dx=-2;
-        console.log('DXDY '+dx+' '+dy);
+        //console.log('DXDY '+dx+' '+dy);
         ws.send(JSON.stringify({'type':'move','data':{'dx':dx,'dy':dy,'name':name}}));
-        console.log(JSON.stringify(players))
+        //console.log(JSON.stringify(players))
         getPlayers();
 
     };
