@@ -75,7 +75,7 @@ SocketServer.on('connection', function (ws) {
     players[id] = {};
     players[id].x = rand(field.l, field.r);
     players[id].y = rand(field.t, field.b);
-
+    players[id].hp=100;
     ws.send(JSON.stringify({'type': 'field', 'data': field}));
     console.log(JSON.stringify({'type': 'field', 'data': field}));
     ws.on('message', function (message) {
@@ -158,12 +158,22 @@ function update() {
                     if(intersectRect(a,b)){
                      //removeBullet(i,bullet);
                      bullets[bullet].splice(i,1);
-
+                     players[p].hp-=rand(3,8);
                      break;
                      }
                 }
             }
             //console.log("KEY: "+bullet);
+        }
+    }
+    //update players
+    for(var p in players){
+        console.log("player "+players[p].hp);
+        if(players[p].hp<=0){
+            console.log("DEAD!");
+            players[p].x=rand(field.l, field.r);
+            players[p].y=rand(field.t, field.b);
+            players[p].hp=100;
         }
     }
 

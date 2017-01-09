@@ -139,10 +139,24 @@ $(document).ready(function () {
             for(var k in players){
                 var p =players[k];
                 ctx.beginPath();
-                ctx.lineWidth=1;
+                ctx.lineWidth=2;
                 ctx.rect(mypos.x+(p.x-myplayer.x),mypos.y+(p.y-myplayer.y),40,40);
                 ctx.stroke();
 
+                if(p.hp<101)ctx.fillStyle="green";
+                if(p.hp<75)ctx.fillStyle="#DEEB4C";
+                if(p.hp<50)ctx.fillStyle="#EB8C4C";
+                if(p.hp<25)ctx.fillStyle="#C50D0D";
+
+                ctx.fillRect(mypos.x+(p.x-myplayer.x),mypos.y+(p.y-myplayer.y)+45,p.hp*40/100,5);
+
+                ctx.beginPath();
+                ctx.lineWidth=1;
+                ctx.strokeStyle="#000000";
+                ctx.rect(mypos.x+(p.x-myplayer.x),mypos.y+(p.y-myplayer.y)+45,40,5);
+                ctx.stroke()
+
+                ctx.fillStyle="#323F49";
                 ctx.font="20px Georgia";
                 ctx.fillText(p.name,mypos.x+(p.x-myplayer.x)-10,mypos.y+(p.y-myplayer.y)-10);
             }
